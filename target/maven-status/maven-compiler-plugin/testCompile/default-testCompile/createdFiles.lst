@@ -1,3 +1,1 @@
-com/restfulbooker/utils/ConfigManager.class
-com/restfulbooker/utils/Endpoints.class
-com/restfulbooker/base/BaseTest.class
+com/example/tests/BookingTests.class
