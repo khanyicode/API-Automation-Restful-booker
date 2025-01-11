@@ -47,6 +47,18 @@ To get started with this project, ensure you have the following installed:
 - Invalid Authentication Token (401)  
 - Missing Authentication Token (403)  
 
+## API Endpoints
+
+The following endpoints are tested in the suite:
+
+| Method | Endpoint       | Description                        |
+|--------|----------------|------------------------------------|
+| POST   | /auth          | Generate an authentication token  |
+| GET    | /booking/{id}  | Retrieve a booking by ID          |
+| POST   | /booking       | Create a new booking              |
+| PUT    | /booking/{id}  | Update an existing booking        |
+| PATCH  | /booking/{id}  | Partially update a booking        |
+| DELETE | /booking/{id}  | Delete a booking                  |
 
 
 ## How to Run the Tests
@@ -55,4 +67,37 @@ To get started with this project, ensure you have the following installed:
 Run the test suite via Maven with the following command:
 ```bash
 mvn clean test
-    
+
+```
+
+## Contributing
+
+We welcome contributions to this project! To get started:
+
+1. **Fork the repository**  
+   Create your own copy of the repository by clicking the "Fork" button at the top-right corner of this page.
+
+2. **Create a feature branch**  
+   Create a new branch for your feature or bugfix. For example:  
+   ```bash
+   git checkout -b feature/your-feature-name
+
+     ```
+3. **Commit your changes**
+   Make your changes and commit them with a clear and descriptive message:
+       ```bash
+   git commit -m "Add description of your changes"
+
+       ```
+
+4. **Push to the branch**
+Push your branch to your forked repository:
+   ```bash
+   git push origin feature/your-feature-name
+
+      ```
+   
+**Thank you for contributing! **
+
+
+
