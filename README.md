@@ -85,10 +85,9 @@ We welcome contributions to this project! To get started:
      ```
 3. **Commit your changes**
    Make your changes and commit them with a clear and descriptive message:
-       ```bash
-   git commit -m "Add description of your changes"
-
-       ```
+   ```bash
+            git commit -m "Add description of your changes"
+   ```
 
 4. **Push to the branch**
 Push your branch to your forked repository:
@@ -97,7 +96,7 @@ Push your branch to your forked repository:
 
       ```
    
-**Thank you for contributing! **
+5 **Thank you for contributing! **
 
 
 
