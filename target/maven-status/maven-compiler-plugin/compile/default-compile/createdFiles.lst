@@ -1,3 +1,2 @@
-com/example/models/Booking.class
 com/example/models/Booking$BookingDates.class
-com/example/utils/ApiUtils.class
+com/example/models/Booking.class
