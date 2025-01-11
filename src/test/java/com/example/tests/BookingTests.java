@@ -104,7 +104,7 @@ public class BookingTests {
 
         assertEquals(150, response.totalprice);
         assertEquals("Dinner", response.additionalneeds);
-        assertEquals("John", response.firstname); // Original value should remain
+        assertEquals("John", response.firstname); 
     }
 
     @Test

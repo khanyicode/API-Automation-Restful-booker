@@ -1,6 +1,6 @@
 package com.example.utils;
 
-import io.restassured.RestAssured;
+
 
 public class ApiUtils {
     // Base URL for the Restful Booker API

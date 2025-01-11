@@ -5,8 +5,8 @@ import com.example.models.Booking;
 public class BookingTestData {
     public static Booking getDefaultBooking() {
         Booking booking = new Booking();
-        booking.firstname = "Mpho";
-        booking.lastname = "Mfokeng";
+        booking.firstname = "John";
+        booking.lastname = "Doe";
         booking.totalprice = 100;
         booking.depositpaid = true;
         booking.bookingdates = new Booking.BookingDates();
