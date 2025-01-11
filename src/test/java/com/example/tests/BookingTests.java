@@ -10,6 +10,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +21,29 @@ public class BookingTests {
     public static void setup() {
         RestAssured.baseURI = ApiUtils.getBaseUrl();
         authToken = AuthUtils.getAuthToken();
+    }
+
+    private BookingResponse createBooking(Booking booking) {
+        return given()
+            .contentType(ContentType.JSON)
+            .body(booking)
+            .post("/booking")
+            .then()
+            .statusCode(200)
+            .extract()
+            .as(BookingResponse.class);
+    }
+
+    private BookingResponse createBookingWithAuth(Booking booking) {
+        return given()
+            .contentType(ContentType.JSON)
+            .header("Cookie", "token=" + authToken)
+            .body(booking)
+            .post("/booking")
+            .then()
+            .statusCode(200)
+            .extract()
+            .as(BookingResponse.class);
     }
 
     @Test
@@ -36,15 +60,8 @@ public class BookingTests {
     @Test
     public void createBooking() {
         Booking testBooking = BookingTestData.getDefaultBooking();
-        
-        BookingResponse response = given()
-            .contentType(ContentType.JSON)
-            .body(testBooking)
-            .post("/booking")
-            .then()
-            .statusCode(200)
-            .extract()
-            .as(BookingResponse.class);
+
+        BookingResponse response = createBooking(testBooking);
 
         assertEquals(testBooking.firstname, response.booking.firstname);
         assertEquals(testBooking.lastname, response.booking.lastname);
@@ -53,18 +70,11 @@ public class BookingTests {
     @Test
     public void updateBooking() {
         // Create initial booking
-        BookingResponse bookingResponse = given()
-            .contentType(ContentType.JSON)
-            .body(BookingTestData.getDefaultBooking())
-            .post("/booking")
-            .then()
-            .statusCode(200)
-            .extract()
-            .as(BookingResponse.class);
+        BookingResponse bookingResponse = createBooking(BookingTestData.getDefaultBooking());
 
         // Update booking
         Booking updatedBooking = BookingTestData.getUpdatedBooking();
-        
+
         Booking response = given()
             .contentType(ContentType.JSON)
             .header("Cookie", "token=" + authToken)
@@ -82,14 +92,7 @@ public class BookingTests {
     @Test
     public void partialUpdateBooking() {
         // Create initial booking
-        BookingResponse bookingResponse = given()
-            .contentType(ContentType.JSON)
-            .body(BookingTestData.getDefaultBooking())
-            .post("/booking")
-            .then()
-            .statusCode(200)
-            .extract()
-            .as(BookingResponse.class);
+        BookingResponse bookingResponse = createBooking(BookingTestData.getDefaultBooking());
 
         // Partial update
         Booking response = given()
@@ -104,20 +107,13 @@ public class BookingTests {
 
         assertEquals(150, response.totalprice);
         assertEquals("Dinner", response.additionalneeds);
-        assertEquals("John", response.firstname); 
+        assertEquals("John", response.firstname);
     }
 
     @Test
     public void deleteBooking() {
         // Create a booking to delete
-        BookingResponse bookingResponse = given()
-            .contentType(ContentType.JSON)
-            .body(BookingTestData.getDefaultBooking())
-            .post("/booking")
-            .then()
-            .statusCode(200)
-            .extract()
-            .as(BookingResponse.class);
+        BookingResponse bookingResponse = createBooking(BookingTestData.getDefaultBooking());
 
         // Delete the booking
         given()
@@ -156,14 +152,7 @@ public class BookingTests {
 
     @Test
     public void updateBooking_InvalidToken_ShouldReturn401() {
-        BookingResponse bookingResponse = given()
-            .contentType(ContentType.JSON)
-            .body(BookingTestData.getDefaultBooking())
-            .post("/booking")
-            .then()
-            .statusCode(200)
-            .extract()
-            .as(BookingResponse.class);
+        BookingResponse bookingResponse = createBooking(BookingTestData.getDefaultBooking());
 
         Booking updatedBooking = BookingTestData.getUpdatedBooking();
 
@@ -178,14 +167,7 @@ public class BookingTests {
 
     @Test
     public void deleteBooking_MissingToken_ShouldReturn403() {
-        BookingResponse bookingResponse = given()
-            .contentType(ContentType.JSON)
-            .body(BookingTestData.getDefaultBooking())
-            .post("/booking")
-            .then()
-            .statusCode(200)
-            .extract()
-            .as(BookingResponse.class);
+        BookingResponse bookingResponse = createBooking(BookingTestData.getDefaultBooking());
 
         given()
             .contentType(ContentType.JSON)
@@ -199,14 +181,7 @@ public class BookingTests {
         Booking booking = BookingTestData.getDefaultBooking();
         booking.totalprice = Integer.MAX_VALUE;
 
-        BookingResponse response = given()
-            .contentType(ContentType.JSON)
-            .body(booking)
-            .post("/booking")
-            .then()
-            .statusCode(200)
-            .extract()
-            .as(BookingResponse.class);
+        BookingResponse response = createBooking(booking);
 
         assertEquals(Integer.MAX_VALUE, response.booking.totalprice);
     }
@@ -232,16 +207,10 @@ public class BookingTests {
         booking.firstname = largeString;
         booking.lastname = largeString;
 
-        BookingResponse response = given()
-            .contentType(ContentType.JSON)
-            .body(booking)
-            .post("/booking")
-            .then()
-            .statusCode(200)
-            .extract()
-            .as(BookingResponse.class);
+        BookingResponse response = createBooking(booking);
 
         assertEquals(largeString, response.booking.firstname);
         assertEquals(largeString, response.booking.lastname);
     }
 }
+
