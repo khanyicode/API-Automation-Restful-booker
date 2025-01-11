@@ -13,4 +13,3 @@ public class Booking {
         public String checkout;
     }
 }
-
